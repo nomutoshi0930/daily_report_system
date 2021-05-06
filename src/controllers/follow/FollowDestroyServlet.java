@@ -1,7 +1,6 @@
-package follow;
+package controllers.follow;
 
 import java.io.IOException;
-import java.sql.Timestamp;
 
 import javax.persistence.EntityManager;
 import javax.servlet.ServletException;
@@ -10,23 +9,20 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import models.Employee;
 import models.Follow;
 import models.Report;
 import utils.DBUtil;
-
-
 /**
- * Servlet implementation class FollowCreateServlet
+ * Servlet implementation class FollowDestroyServlet
  */
-@WebServlet(name = "follow/create", urlPatterns = { "/follow/create" })
-public class FollowCreateServlet extends HttpServlet {
+@WebServlet(name = "follow/destroy", urlPatterns = { "/follow/destroy" })
+public class FollowDestroyServlet extends HttpServlet {
     private static final long serialVersionUID = 1L;
 
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public FollowCreateServlet() {
+    public FollowDestroyServlet() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -36,23 +32,19 @@ public class FollowCreateServlet extends HttpServlet {
      */
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         EntityManager em = DBUtil.createEntityManager();
-        Follow f = new Follow();
-        Timestamp currentTime = new Timestamp(System.currentTimeMillis());
-        Report r = em.find(Report.class, Integer.parseInt(request.getParameter("following")));
-        f.setEmployee((Employee) request.getSession().getAttribute("login_employee"));
-        f.setFollow(r.getEmployee());
-        f.setCreated_at(currentTime);
-        f.setUpdated_at(currentTime);
 
-        Employee unfollow = r.getEmployee();
-        String unfollow_name = unfollow.getName();
+        Report r = em.find(Report.class, Integer.parseInt(request.getParameter("employee_id")));
+        Integer ei = 0;
+        ei = em.createNamedQuery("followDestroy", Integer.class)
+                .setParameter("follow", r.getEmployee())
+                .getSingleResult();
+        Follow f = em.find(Follow.class, ei);
 
         em.getTransaction().begin();
-        em.persist(f);
+        em.remove(f);
         em.getTransaction().commit();
         em.close();
-        request.getSession().setAttribute("flush", "フォローしました。");
-        request.getSession().setAttribute("flush", unfollow_name + "さんをフォローしました。");
+        request.getSession().setAttribute("flush", "フォロー解除しました。");
 
         response.sendRedirect(request.getContextPath() + "/reports/index");
     }

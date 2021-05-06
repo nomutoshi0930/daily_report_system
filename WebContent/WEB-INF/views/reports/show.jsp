@@ -14,6 +14,26 @@
                             <td><c:out value="${report.employee.name}" /></td>
                         </tr>
                         <tr>
+                            <th>フォロー</th>
+                            <c:choose>
+                                <c:when
+                                    test="${sessionScope.login_employee.id != report.employee.id}">
+
+                                    <td class="follow">
+                                        <form method="POST" action="<c:url value='/follow/create' />">
+                                            <button type="submit" name="following" value="${report.id}">フォロー</button>
+                                        </form>
+                                        <form method="POST" action="<c:url value='/follow/destroy' />">
+                                            <button type="submit" name="employee_id" value="${report.id}">フォロー解除</button>
+                                        </form>
+                                    </td>
+
+                                </c:when>
+                                <c:otherwise>
+                                    <td></td>
+                                </c:otherwise>
+                            </c:choose>
+                        <tr>
                             <th>日付</th>
                             <td><fmt:formatDate value="${report.report_date}" pattern="yyyy-MM-dd" /></td>
                         </tr>

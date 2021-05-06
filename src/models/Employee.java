@@ -123,4 +123,5 @@ import javax.persistence.Table;
             this.delete_flag = delete_flag;
         }
 
+
 }

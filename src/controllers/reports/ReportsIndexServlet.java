@@ -31,7 +31,7 @@ public class ReportsIndexServlet extends HttpServlet {
      * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
      */
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
+        throws ServletException, IOException {
         EntityManager em = DBUtil.createEntityManager();
 
         Employee login_employee = (Employee) request.getSession().getAttribute("login_employee");
@@ -74,7 +74,6 @@ public class ReportsIndexServlet extends HttpServlet {
         long reports_count = (long) em.createNamedQuery("getReportsCount", Long.class)
                 .getSingleResult();
 
-        System.out.println("getAllReportsは" + reports +"です。");
 
         em.close();
 
