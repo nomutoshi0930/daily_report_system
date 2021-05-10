@@ -9,20 +9,21 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import models.Employee;
 import models.Follow;
-import models.Report;
 import utils.DBUtil;
+
 /**
- * Servlet implementation class FollowDestroyServlet
+ * Servlet implementation class FollowerDestroyServlet
  */
-@WebServlet(name = "follow/destroy", urlPatterns = { "/follow/destroy" })
-public class FollowDestroyServlet extends HttpServlet {
+@WebServlet(name = "follower/destroy", urlPatterns = { "/follower/destroy" })
+public class FollowerDestroyServlet extends HttpServlet {
     private static final long serialVersionUID = 1L;
 
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public FollowDestroyServlet() {
+    public FollowerDestroyServlet() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -33,11 +34,13 @@ public class FollowDestroyServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         EntityManager em = DBUtil.createEntityManager();
 
-        Report r = em.find(Report.class, Integer.parseInt(request.getParameter("employee_id")));
+        Employee login_employee = (Employee) request.getSession().getAttribute("login_employee");
+        Follow ff = em.find(Follow.class, Integer.parseInt(request.getParameter("employee_id")));
 
-        int ei = 0;
-        ei = em.createNamedQuery("followDestroy", Integer.class)
-                .setParameter("follow", r.getEmployee())
+        Integer ei = 0;
+        ei = em.createNamedQuery("followerDestroy", Integer.class)
+                .setParameter("follow", login_employee)
+                .setParameter("employee", ff.getEmployee())
                 .getSingleResult();
 
         Follow f = em.find(Follow.class, ei);
@@ -52,3 +55,6 @@ public class FollowDestroyServlet extends HttpServlet {
     }
 
 }
+
+
+

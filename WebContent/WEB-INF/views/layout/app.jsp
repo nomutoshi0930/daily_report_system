@@ -18,8 +18,11 @@
                             <a href="<c:url value='/employees/index' />">従業員管理</a>&nbsp;
                         </c:if>
                         <a href="<c:url value='/reports/index' />">日報管理</a>&nbsp;
-                    </c:if>
-                </div>
+                        <a href="<c:url value='/following/index' />">フォロー中</a>&nbsp;
+                        </c:if>
+
+
+                                      </div>
                 <c:if test="${sessionScope.login_employee != null}">
                     <div id="employee_name">
                         <c:out value="${sessionScope.login_employee.name}" />&nbsp;さん&nbsp;&nbsp;&nbsp;
