@@ -35,10 +35,10 @@ public class FollowDestroyServlet extends HttpServlet {
 
         Report r = em.find(Report.class, Integer.parseInt(request.getParameter("employee_id")));
 
-        int ei = 0;
+        Integer ei = 0;
         ei = em.createNamedQuery("followDestroy", Integer.class)
                 .setParameter("follow", r.getEmployee())
-                .getSingleResult();
+                .getMaxResults();
 
         Follow f = em.find(Follow.class, ei);
 
