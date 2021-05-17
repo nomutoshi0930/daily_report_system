@@ -22,37 +22,25 @@
                 <c:forEach var="report" items="${reports}" varStatus="status">
                     <tr class="row${status.count % 2}">
                                             <td class="report_name"><c:out
-                                value="${report.employee.name}" /></td>
+                                value="${report.employee.name}" />
                         <c:choose>
                             <c:when
                                 test="${sessionScope.login_employee.id != report.employee.id}">
 
                                 <!-- フォローボタン -->>
-                                <c:choose>
-                                <c:when test="${follow_count != 1}">
+
                                 <td class="follow">
                                     <form method="POST" action="<c:url value='/follow/create' />">
                                         <button type="submit" name="following" value="${report.id}">フォロー</button>
                                     </form>
+
                                 </td>
-                                </c:when>
-                                <c:otherwise>
-                                <td class="follow">
-                                    <form method="POST" action="<c:url value='/follow/destroy' />">
-                                        <button type="submit" name="employee_id" value="${report.id}">フォロー解除</button>
-                                        <button type="submit" name="employee_id" value="${report.id}">フォロー中</button>
-                                    </form>
-                                </td>
-                                </c:otherwise>
-                                </c:choose>
 
                             </c:when>
                             <c:otherwise>
                                 <td></td>
                             </c:otherwise>
                         </c:choose>
-
-                        <td class="report_name"><c:out value="${report.employee.name}" /></td>
                         <td class="report_date"><fmt:formatDate value='${report.report_date}' pattern='yyyy-MM-dd' /></td>
                         <td class="report_title">${report.title}</td>
                         <td class="report_action"><a href="<c:url value='/reports/show?id=${report.id}' />">詳細を見る</a></td>
