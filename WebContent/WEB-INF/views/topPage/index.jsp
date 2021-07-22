@@ -14,7 +14,6 @@
             <tbody>
                 <tr>
                     <th class="report_name">氏名</th>
-                    <th class="follow">フォロー</th>
                     <th class="report_date">日付</th>
                     <th class="report_title">タイトル</th>
                     <th class="report_action">操作</th>
@@ -23,24 +22,7 @@
                     <tr class="row${status.count % 2}">
                                             <td class="report_name"><c:out
                                 value="${report.employee.name}" />
-                        <c:choose>
-                            <c:when
-                                test="${sessionScope.login_employee.id != report.employee.id}">
 
-                                <!-- フォローボタン -->>
-
-                                <td class="follow">
-                                    <form method="POST" action="<c:url value='/follow/create' />">
-                                        <button type="submit" name="following" value="${report.id}">フォロー</button>
-                                    </form>
-
-                                </td>
-
-                            </c:when>
-                            <c:otherwise>
-                                <td></td>
-                            </c:otherwise>
-                        </c:choose>
                         <td class="report_date"><fmt:formatDate value='${report.report_date}' pattern='yyyy-MM-dd' /></td>
                         <td class="report_title">${report.title}</td>
                         <td class="report_action"><a href="<c:url value='/reports/show?id=${report.id}' />">詳細を見る</a></td>

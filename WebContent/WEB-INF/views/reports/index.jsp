@@ -22,8 +22,8 @@
                 </tr>
                 <c:forEach var="report" items="${reports}" varStatus="status">
                     <tr class="row${status.count % 2}">
-                        <td class="report_name"><c:out
-                                value="${report.employee.name}" /></td>
+                        <td class="report_name">
+                        <c:out value="${report.employee.name}" /></td>
                         <c:choose>
                             <c:when
                                 test="${sessionScope.login_employee.id != report.employee.id}">
@@ -33,9 +33,7 @@
                                     <form method="POST" action="<c:url value='/follow/create' />">
                                         <button type="submit" name="following" value="${report.id}">フォロー</button>
                                     </form>
-                                    <form method="POST" action="<c:url value='/follow/destroy' />">
-                                        <button type="submit" name="employee_id" value="${report.id}">フォロー解除</button>
-                                    </form>
+
                                 </td>
 
                             </c:when>
